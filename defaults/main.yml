@@ -6,8 +6,8 @@ pihole_container_name: pihole-container
 
 pihole_volumes_dir: /srv/pihole
 
-pihole_http_port: 8080
-pihole_dns_port: 53
+pihole_http_port: "8080"
+pihole_dns_port: "53"
 
 pihole_publish:
   - "{{ pihole_dns_port }}:53/tcp"

@@ -21,6 +21,34 @@
     state: present
     reload: true
 
+- name: Get firewalld service status.
+  ansible.builtin.systemd:
+    name: firewalld
+  register: firewalld_status
+
+- name: Ensure ports are open in firewall.
+  when: firewalld_status.status.ActiveState == 'active'
+  block:
+    - name: Ensure dns service is open in firewall.
+      become: true
+      ansible.posix.firewalld:
+        state: enabled
+        service: dns
+        immediate: true
+        permanent: true
+
+    - name: Ensure custom dns port is open in firewall.
+      when: pihole_dns_port != '53'
+      become: true
+      ansible.posix.firewalld:
+        state: enabled
+        port: "{{ item }}"
+        immediate: true
+        permanent: true
+      loop:
+        - "53/tcp"
+        - "53/udp"
+
 - name: Run tasks under user {{ pihole_user }}.
   become: true
   become_user: "{{ pihole_user }}"
