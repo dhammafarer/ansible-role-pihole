@@ -1,0 +1,21 @@
+---
+pihole_user: "{{ ansible_user }}"
+
+pihole_pod_name: pihole
+pihole_container_name: pihole-container
+
+pihole_volumes_dir: /srv/pihole
+
+pihole_http_port: 8080
+pihole_dns_port: 53
+
+pihole_publish:
+  - "{{ pihole_dns_port }}:53/tcp"
+  - "{{ pihole_dns_port }}:53/udp"
+  - "{{ pihole_http_port }}:80/tcp"
+
+pihole_image_name: docker.io/pihole/pihole
+pihole_image_tag: latest
+
+pihole_env_tz: "Asia/Taipei"
+pihole_env_webpassword: secret

@@ -1,0 +1,3 @@
+---
+pihole_volumes_dir: /srv/pihole
+pihole_user: vagrant
